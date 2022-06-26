@@ -1,40 +1,26 @@
-import React, { useState } from "react";
-
-import Toast from "react-bootstrap/Toast";
+import React from "react";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-
+import Dashboard from "./components/Dashboard";
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import "./App.css";
+import Login from './components/Login';
 
-const ExampleToast = ({ children }) => {
-  const [show, toggleShow] = useState(true);
-
+const App = () => {
   return (
-    <>
-      {!show && <Button onClick={() => toggleShow(true)}>Show Toast</Button>}
-      <Toast show={show} onClose={() => toggleShow(false)}>
-        <Toast.Header>
-          <strong className="mr-auto">React-Bootstrap</strong>
-        </Toast.Header>
-        <Toast.Body>{children}</Toast.Body>
-      </Toast>
-    </>
-  );
-};
-
-const App = () => (
-  <Container className="p-3">
-    <Container className="p-5 mb-4 bg-light rounded-3">
-      <h1 className="header">Welcome To React-Bootstrap</h1>
-      <ExampleToast>
-        We now have Toasts
-        <span role="img" aria-label="tada">
-          🎉
-        </span>
-      </ExampleToast>
+    <Container className="p-3">
+      <Container className="p-5 mb-4 bg-light rounded-3">
+        <h1 className="header">Auth Example </h1>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </BrowserRouter>
+      </Container>
     </Container>
-  </Container>
-);
+  )
+}
 
 export default App;
 
