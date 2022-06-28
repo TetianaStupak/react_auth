@@ -4,58 +4,33 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-async function loginUser(cred) {
-    axios.post("auth/realms/Recruitment/protocol/openid-connect/token",
-        {
-            grant_type: 'password',
-            username: cred.username,
-            password: cred.password,
-            client_id: 'oauth-proxy-rec'
-        },
-        {
-            baseURL: 'https://auth0.prozeta.net/',
-            mode: 'same-origin', // no-cors, *cors, same-origin
-            crossDomain: true,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Credentials': 'true',
-                "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-                "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-            },
 
-        }).then(function (response) {
-            console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-
-
-    // return fetch('https://auth0.prozeta.net/auth/realms/Recruitment/protocol/openid-connect/token', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-    //         'Access-Control-Allow-Origin': '*',
-    //         'Access-Control-Allow-Credentials': 'true',
-    //         "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-    //         "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-    //     },
-    //     form: {
-    //         'grant_type': 'password',
-    //         username: credentials.username,
-    //         password: credentials.password,
-    //         'client_id': 'oauth-proxy-rec',
-    //         'redirect_uri': '/'
-    //     }
-    // })
-    //     .then(data => data.json())
-}
 
 export default function Login({ setToken }) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
+    async function loginUser(cred) {
+        axios.post("auth/realms/Recruitment/protocol/openid-connect/token",
+            {
+                grant_type: 'password',
+                username: cred.username,
+                password: cred.password,
+                client_id: 'oauth-proxy-rec'
+            },
+            {
+                mode: 'no-cors', // no-cors, *cors, same-origin
+                baseURL: 'https://auth0.prozeta.net/',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
 
+            }).then(function (response) {
+                setToken(JSON.stringify(response.data))
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
     const handleSubmit = async e => {
         e.preventDefault();
         const token = await loginUser({

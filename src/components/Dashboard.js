@@ -11,7 +11,6 @@ export default function Dashboard({ token }) {
             "https://api.rec.devel.prozeta.net/data.json",
             {
                 headers: {
-                    "Access-Control-Allow-Origin": "*",
                     "Content-type": "Application/json",
                     "Authorization": `Bearer ${token.access_token}`
                 }
