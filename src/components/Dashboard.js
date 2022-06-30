@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Card from 'react-bootstrap/Card';
 
 export default function Dashboard({ token }) {
-    const [username, setUserName] = useState();
+    console.log(token);
+    const [data, setData] = useState();
     useEffect(() => {
         loginUser();
     }, []);
@@ -12,26 +14,33 @@ export default function Dashboard({ token }) {
             {
                 headers: {
                     "Content-type": "Application/json",
-                    "Authorization": `Bearer ${token.access_token}`
+                    "Authorization": `Bearer ${token?.access_token}`
                 }
             }
         )
             .then((response) => {
-                var response = response.data;
-                setUserName(response);
+                setData(JSON.stringify(response.data, null, 2));
             },
                 (error) => {
                     var status = error.response.status
                 }
             );
-    }
+    };
 
 
     return (
         <div>
             <h2>Dashboard</h2>
-            <div>{username}</div>
+            <Card>
+                <Card.Body>
+                    <pre>
+                        <code>
+                            {data}
+                        </code>
+                    </pre>
+                </Card.Body>
+            </Card>
         </div>
 
     );
-}
+};

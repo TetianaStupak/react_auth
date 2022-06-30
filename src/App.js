@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/Container";
-import Dashboard from "./components/Dashboard";
+import React, { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Dashboard from './components/Dashboard';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import "./App.css";
+import './App.css';
 import Login from './components/Login';
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
         </Container>
       </Container>
     )
-  }
+  };
 
   return (
     <Container className="p-3">
@@ -25,14 +25,14 @@ const App = () => {
         <h1 className="header">Auth Example </h1>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard token={token} />} />
             <Route path="/dashboard" element={<Dashboard token={token} />} />
           </Routes>
         </BrowserRouter>
       </Container>
     </Container>
   )
-}
+};
 
 export default App;
 

@@ -10,36 +10,29 @@ export default function Login({ setToken }) {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
     async function loginUser(cred) {
-        axios.post("auth/realms/Recruitment/protocol/openid-connect/token",
+        axios.post('auth/realms/Recruitment/protocol/openid-connect/token',
+            `grant_type=password&username=${encodeURIComponent(cred.username)}&password=${encodeURIComponent(cred.password)}&client_id=oauth-proxy-rec`,
             {
-                grant_type: 'password',
-                username: cred.username,
-                password: cred.password,
-                client_id: 'oauth-proxy-rec'
-            },
-            {
-                mode: 'no-cors', // no-cors, *cors, same-origin
+                mode: 'no-cors',
                 baseURL: 'https://auth0.prozeta.net/',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
 
             }).then(function (response) {
-                setToken(JSON.stringify(response.data))
+                setToken(response.data);
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }
+    };
     const handleSubmit = async e => {
         e.preventDefault();
-        const token = await loginUser({
+        await loginUser({
             username,
             password
         });
-        setToken(token);
-        console.log(token)
-    }
+    };
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -67,4 +60,4 @@ export default function Login({ setToken }) {
 
 Login.propTypes = {
     setToken: PropTypes.func.isRequired
-}
+};
